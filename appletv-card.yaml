@@ -80,7 +80,7 @@ cards:
           action: none
         entity: media_player.gostinaia
       - type: template
-        icon: mdi:dots-horizontal
+        icon: lucide:share
         icon_color: disabled
         tap_action:
           action: navigate
@@ -530,6 +530,33 @@ cards:
               }
             ha-card:hover {
                opacity: 100%; }
+      - type: custom:mushroom-chips-card
+        chips:
+          - type: template
+            icon: lucide:share
+            icon_color: disabled
+            tap_action:
+              action: navigate
+              navigation_path: "#appletv"
+            hold_action:
+              action: none
+            double_tap_action:
+              action: none
+            card_mod:
+              style: |
+                ha-card:hover {
+                  --chip-background: rgba(var(--rgb-primary-text-color), 0.1);
+                  scale: 1;}
+        alignment: center
+        card_mod:
+          style: |
+            ha-card {
+              --chip-height: 50px;
+              --chip-background: none;
+              --chip-border-radius: 50px;
+              --primary-text-color: rgba(var(--rgb-disabled)); ;
+              background-color: transparent !important;
+              }
     card_mod:
       style: |
         ha-card:before {
@@ -561,6 +588,14 @@ cards:
         icon: bha:apple-tv
         margin_top_mobile: calc(100vh - 550px)
         margin_top_desktop: calc(100vh - 500px)
+        tap_action:
+          action: none
+        double_tap_action:
+          action: none
+        hold_action:
+          action: none
+        margin: 7px
+        width_desktop: 540px
       - type: custom:stack-in-card
         cards:
           - type: custom:mushroom-chips-card
@@ -853,34 +888,15 @@ cards:
                 opacity: 100%;
                 width: 100%;
                 }
-      - type: custom:mushroom-chips-card
-        chips:
-          - type: template
-            icon: mdi:dots-horizontal
-            tap_action:
-              action: none
-            hold_action:
-              action: none
-            double_tap_action:
-              action: none
-        alignment: center
-        grid_options:
-          columns: 24
-          rows: auto
-        card_mod:
-          style: |
-            ha-card {
-              margin: 0px 0px 0px;
-              --chip-background: none;
-              --chip-border-width: 0;
-              --chip-box-shadow: none;
-              --chip-border-radius: 12px;
-              --chip-height: 40px;
-              --chip-padding: 14px;
-              --chip-spacing: -35px;
-              --chip-icon-size: 1em;
-              --chip-font-size: 0.7em;
-            }
+      - type: custom:bubble-card
+        card_type: separator
+        name: ""
+        icon: ""
+        styles: |
+          .bubble-line {
+            background: var(--primary-text-color);
+            opacity: 0.1;
+          }
       - type: custom:mushroom-media-player-card
         entity: media_player.samsung
         volume_controls:
@@ -914,7 +930,7 @@ cards:
   - type: heading
     icon: bha:apple-tv
     heading_style: subtitle
-    heading: 1.1-b1
+    heading: 1.1-b2
     visibility:
       - condition: state
         entity: sensor.balkon_window_l_battery

@@ -8,14 +8,18 @@ cards:
     card:
       type: vertical-stack
       cards:
-        - type: custom:button-card
-          name: Статусная строка
-          styles:
-            card:
-              - height: 1px
-              - background: transparent
-              - border: none
-          action: none
+        - type: heading
+          icon: mdi:information
+          heading: Статусная строка
+          heading_style: title
+          card_mod:
+            style: |
+              ha-card {
+                   background: rgba(200,100,0) !important;
+                 }
+    grid_options:
+      columns: 6
+      rows: auto
   - type: custom:vertical-stack-in-card
     cards:
       - type: custom:mushroom-chips-card
@@ -187,7 +191,7 @@ cards:
         alignment: start
         card_mod:
           style: |
-            {% set top = 7 %}
+            {% set top = 0 %}
             {% set chip_height = 48 %}
             {% include 'title_chips_scrollable.jinja' %}
     card_mod:
@@ -228,6 +232,9 @@ cards:
           /* Анимация */
           transition: all 0.3s ease !important;
         }
+    grid_options:
+      columns: 6
+      rows: auto
   - type: conditional
     conditions:
       - condition: state
@@ -236,15 +243,18 @@ cards:
     card:
       type: vertical-stack
       cards:
-        - type: custom:button-card
-          name: Карта
-          styles:
-            card:
-              - height: 1px
-              - background: transparent
-              - border: none
-              - color: red
-          action: none
+        - type: heading
+          icon: mdi:view-dashboard
+          heading: Карта
+          heading_style: title
+          card_mod:
+            style: |
+              ha-card {
+                   background: rgba(200,0,100) !important;
+                 }
+    grid_options:
+      columns: 6
+      rows: auto
   - type: custom:vertical-stack-in-card
     cards:
       - type: vertical-stack
@@ -333,6 +343,12 @@ cards:
               - condition: state
                 entity: media_player.gostinaia
                 state_not: unavailable
+              - condition: state
+                entity: media_player.gostinaia
+                state_not: unavailable
+              - condition: state
+                entity: binary_sensor.appletv_media_progress
+                state: "on"
             card:
               entity: media_player.gostinaia
               tap_action: none
@@ -356,126 +372,177 @@ cards:
                 style:
                   .: |
                     ha-card {
-                      margin: 0px 20px 10px 20px;
+                      margin: 20px 20px 10px 20px;
                       height: var(--mmp-progress-height);
                       --mmp-accent-color: rgba(var(--rgb-primary-text-color),1);;
                       --ha-card-border-width: 0;
                     }
-          - type: custom:mushroom-chips-card
-            chips:
-              - type: template
-                icon: fas:backward-step
-                icon_color: "1"
-                tap_action:
-                  action: call-service
-                  service: media_player.media_previous_track
-                  target:
-                    entity_id: media_player.gostinaia
-                hold_action:
-                  action: none
-                double_tap_action:
-                  action: none
-                card_mod:
-                  style:
-                    .: |
-                      {% set hover = 'true' %}
-                      {% set stating = 'false' %}
-                      {% include 'chip_settings_style.jinja' %}
-              - type: template
+          - type: conditional
+            conditions:
+              - condition: state
                 entity: media_player.gostinaia
-                tap_action:
-                  action: call-service
-                  service: media_player.media_play_pause
-                  target:
-                    entity_id: media_player.gostinaia
-                hold_action:
-                  action: none
-                double_tap_action:
-                  action: none
-                icon: >-
-                  {% if is_state('media_player.gostinaia', 'playing')
-                  %}fas:pause {% elif is_state('media_player.gostinaia',
-                  'paused') %}fas:play {% else %}fas:exclamation-circle {% endif
-                  %}
-                icon_color: "1"
-                card_mod:
-                  style:
-                    .: |
-                      {% set hover = 'true' %}
-                      {% set stating = 'false' %}
-                      {% include 'chip_settings_style.jinja' %}
-              - type: template
-                icon: fas:forward-step
-                icon_color: "1"
-                tap_action:
-                  action: call-service
-                  service: media_player.media_next_track
-                  target:
-                    entity_id: media_player.gostinaia
-                hold_action:
-                  action: none
-                double_tap_action:
-                  action: none
-                card_mod:
-                  style:
-                    .: |
-                      {% set hover = 'true' %}
-                      {% set stating = 'false' %}
-                      {% include 'chip_settings_style.jinja' %}
-            alignment: justify
-            card_mod:
-              style:
-                .: |
-                  {% include 'chip_buttons_big.jinja' %}
-          - type: custom:mushroom-media-player-card
-            entity: media_player.samsung
-            volume_controls:
-              - volume_set
-            layout: horizontal
-            primary_info: none
-            secondary_info: none
-            icon_type: none
-            card_mod:
-              style:
-                mushroom-media-player-volume-control$: |
-                  mushroom-slider {
-                    --main-color: #505050 !important;
-                    --bg-color: #50505055 !important;
-                    --control-height: 25px !important;
-                  }
-                .: |
-                  ha-card {
-                    background: transparent !important;
-                    opacity: 100%;
-                    margin-top: 0px;
-                    border-width: 0px;
-                    margin: 20px 0px 20px;
-                  }
+                state_not: standby
+            card:
+              type: custom:mushroom-chips-card
+              chips:
+                - type: template
+                  icon: fas:backward-step
+                  icon_color: "1"
+                  tap_action:
+                    action: call-service
+                    service: media_player.media_previous_track
+                    target:
+                      entity_id: media_player.gostinaia
+                  hold_action:
+                    action: none
+                  double_tap_action:
+                    action: none
+                  card_mod:
+                    style:
+                      .: |
+                        {% set hover = 'true' %}
+                        {% set stating = 'false' %}
+                        {% include 'chip_settings_style.jinja' %}
+                - type: template
+                  entity: media_player.gostinaia
+                  tap_action:
+                    action: call-service
+                    service: media_player.media_play_pause
+                    target:
+                      entity_id: media_player.gostinaia
+                  hold_action:
+                    action: none
+                  double_tap_action:
+                    action: none
+                  icon: >-
+                    {% if is_state('media_player.gostinaia', 'playing')
+                    %}fas:pause {% elif is_state('media_player.gostinaia',
+                    'paused') %}fas:play {% else %}fas:exclamation-circle {%
+                    endif %}
+                  icon_color: "1"
+                  card_mod:
+                    style:
+                      .: |
+                        {% set hover = 'true' %}
+                        {% set stating = 'false' %}
+                        {% include 'chip_settings_style.jinja' %}
+                - type: template
+                  icon: fas:forward-step
+                  icon_color: "1"
+                  tap_action:
+                    action: call-service
+                    service: media_player.media_next_track
+                    target:
+                      entity_id: media_player.gostinaia
+                  hold_action:
+                    action: none
+                  double_tap_action:
+                    action: none
+                  card_mod:
+                    style:
+                      .: |
+                        {% set hover = 'true' %}
+                        {% set stating = 'false' %}
+                        {% include 'chip_settings_style.jinja' %}
+              alignment: justify
+              card_mod:
+                style:
+                  .: |
+                    {% include 'chip_buttons_big.jinja' %}
+          - type: conditional
+            conditions:
+              - condition: state
+                entity: media_player.gostinaia
+                state: standby
+            card:
+              type: custom:mushroom-chips-card
+              chips:
+                - type: template
+                  entity: switch.apple_tv_switch
+                  tap_action:
+                    action: toggle
+                  hold_action:
+                    action: none
+                  double_tap_action:
+                    action: none
+                  icon: mdi:power
+                  icon_color: "1"
+                  card_mod:
+                    style:
+                      .: |
+                        {% set hover = 'true' %}
+                        {% set stating = 'false' %}
+                        {% include 'chip_settings_style.jinja' %}
+              alignment: center
+              card_mod:
+                style:
+                  .: |
+                    {% include 'chip_buttons_big.jinja' %}
+          - type: conditional
+            conditions:
+              - condition: state
+                entity: media_player.gostinaia
+                state_not: standby
+            card:
+              type: custom:mushroom-media-player-card
+              entity: media_player.samsung
+              volume_controls:
+                - volume_set
+              layout: horizontal
+              primary_info: none
+              secondary_info: none
+              icon_type: none
+              card_mod:
+                style:
+                  mushroom-media-player-volume-control$: |
+                    mushroom-slider {
+                      --main-color: #505050 !important;
+                      --bg-color: #50505055 !important;
+                      --control-height: 25px !important;
+                    }
+                  .: |
+                    ha-card {
+                      background: transparent !important;
+                      opacity: 100%;
+                      margin-top: 0px;
+                      border-width: 0px;
+                      margin: 20px 0px 20px;
+                    }
 
 
-                  @media (pointer: fine) {
-                    ha-card:hover {
-                      background: {{(states('input_text.s_card_background_off_hover')) }};
-                  }
-                  @media (min-width: 1150px) {
-                  ha-card {
-                    margin: 20px {{space|default(150)}}px 20px  ;
-                  }
-                    
-
-
-
-
-
-
-
-
-
-
-
-
-
-                    
+                    @media (pointer: fine) {
+                      ha-card:hover {
+                        background: {{(states('input_text.s_card_background_off_hover')) }};
+                    }
+                    @media (min-width: 1150px) {
+                    ha-card {
+                      margin: 20px {{space|default(150)}}px 20px  ;
+                    }
+          - type: conditional
+            conditions:
+              - condition: state
+                entity: media_player.gostinaia
+                state: standby
+            card:
+              type: custom:bubble-card
+              card_type: separator
+              styles: |
+                .bubble-line {
+                  background: var(--primary-text-color);
+                  opacity: 0.1;
+                  margin: 40px 40px 20px;
+                }
+              card_mod:
+                style:
+                  .: |
+                    ha-card {
+                      margin: {{left|default(0)}}px 150px 0px;
+                    }
+                    @media (max-width: 1150px) {
+                      ha-card {
+                        margin: {{left|default(0)}}px {{space|default(0)}}px 0px;
+                      }
+                    }
           - type: custom:mushroom-chips-card
             chips:
               - type: conditional
@@ -630,32 +697,16 @@ cards:
             card_mod:
               style:
                 .: |
+                  {% if is_state('media_player.gostinaia', 'standby') %}
+                  {% set top = '40' %}
+                  {% else%} {% endif %}
                   {% include 'chip_buttons_small.jinja' %}
         grid_options:
           columns: 24
           rows: auto
-        card_mod:
-          style: |
-            ha-card:before {
-              transform: translate3d(0,0,0);
-              -webkit-transform: translate3d(0,0,0);
-              content: "";
-              position: absolute;
-              height: 100%;
-              width: 100%;
-
-              background: transparent !important;
-              filter: blur(0px) saturate(200%);
-              background-size: 100% 100%;
-            }
-            ha-card {
-
-            background-color: transparent !important;
-            padding: 0px;
-              transform: translate3d(0,0,0);
-              -webkit-transform: translate3d(0,0,0);
-
-            }
+    grid_options:
+      columns: 6
+      rows: auto
     card_mod:
       style: |
         ha-card {
@@ -670,6 +721,7 @@ cards:
           z-index: 1 !important;
           /* Визуальные стили ha-card */
           background: transparent !important;
+          border-width: 0px;
 
           
           /* Выравнивание содержимого */
@@ -678,6 +730,26 @@ cards:
           /* Анимация */
           transition: all 0.3s ease !important;
         }
+  - type: conditional
+    conditions:
+      - condition: state
+        entity: "12"
+        state: "12"
+    card:
+      type: vertical-stack
+      cards:
+        - type: heading
+          icon: phu:apple-tv
+          heading: 0.3.5
+          heading_style: title
+          card_mod:
+            style: |
+              ha-card {
+                   background: rgba(100,0,200) !important;
+                 }
+    grid_options:
+      columns: 6
+      rows: auto
   - type: vertical-stack
     cards:
       - type: custom:bubble-card
@@ -1482,11 +1554,3 @@ cards:
                 border-width: 0px;
 
                   }
-  - type: heading
-    icon: phu:apple-tv
-    heading: 0.3.1
-    heading_style: title
-    visibility:
-      - condition: state
-        entity: "1233"
-        state: "12121"

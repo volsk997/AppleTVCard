@@ -145,25 +145,6 @@ cards:
                   }  
           - type: spacer
           - type: template
-            tap_action:
-              action: navigate
-              navigation_path: "#samsung"
-            icon: mdi:soundbar
-            icon_color: "1"
-            hold_action:
-              action: none
-            double_tap_action:
-              action: none
-            card_mod:
-              style: |
-                ha-card {
-                  opacity: 0.4 }   
-                ha-card:hover {
-                  opacity: 1 }     
-                ha-card:active {
-                  scale: 0.8;
-                }  
-          - type: template
             icon: |2-
                 {% if is_state_attr(config.entity, 'app_id', 'ru.kinopoisk')%} yandex:kinopoisk
                 {% elif is_state_attr(config.entity, 'app_id', 'com.google.ios.youtube')%} mdi:youtube
@@ -398,7 +379,8 @@ cards:
                   style:
                     .: |
                       {% set hover = 'true' %}
-                      {% include 'button_opacity.jinja' %}
+                      {% set stating = 'false' %}
+                      {% include 'chip_settings_style.jinja' %}
               - type: template
                 entity: media_player.gostinaia
                 tap_action:
@@ -420,8 +402,8 @@ cards:
                   style:
                     .: |
                       {% set hover = 'true' %}
-                      {% set icon_size = '1.5' %}
-                      {% include 'button_opacity.jinja' %}
+                      {% set stating = 'false' %}
+                      {% include 'chip_settings_style.jinja' %}
               - type: template
                 icon: fas:forward-step
                 icon_color: "1"
@@ -438,22 +420,183 @@ cards:
                   style:
                     .: |
                       {% set hover = 'true' %}
-                      {% include 'button_opacity.jinja' %}
+                      {% set stating = 'false' %}
+                      {% include 'chip_settings_style.jinja' %}
             alignment: justify
             card_mod:
               style:
-                .: >
-                  {% set background_color =
-                  '1rgba(var(--rgb-primary-text-color), 0.1)' %}
+                .: |
+                  {% include 'chip_buttons_big.jinja' %}
+          - type: custom:mushroom-media-player-card
+            entity: media_player.samsung
+            volume_controls:
+              - volume_set
+            layout: horizontal
+            primary_info: none
+            secondary_info: none
+            icon_type: none
+            card_mod:
+              style:
+                mushroom-media-player-volume-control$: |
+                  mushroom-slider {
+                    --main-color: #505050 !important;
+                    --bg-color: #50505055 !important;
+                    --control-height: 25px !important;
+                  }
+                .: |
+                  ha-card {
+                    background: transparent !important;
+                    opacity: 100%;
+                    margin-top: 0px;
+                    border-width: 0px;
+                    margin: 20px 0px 20px;
+                  }
 
-                  {% include 'cover_buttons_stack.jinja' %}
+
+                  @media (pointer: fine) {
+                    ha-card:hover {
+                      background: {{(states('input_text.s_card_background_off_hover')) }};
+                  }
+                  @media (min-width: 1150px) {
+                  ha-card {
+                    margin: 20px {{space|default(150)}}px 20px  ;
+                  }
+                    
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    
           - type: custom:mushroom-chips-card
             chips:
+              - type: conditional
+                conditions:
+                  - condition: state
+                    entity: media_player.gostinaia
+                    state_not: standby
+                chip:
+                  type: template
+                  entity: sensor.appletv_app
+                  tap_action:
+                    action: perform-action
+                    perform_action: media_player.select_source
+                    target:
+                      entity_id: media_player.gostinaia
+                    data:
+                      source: Кинопоиск
+                  icon: yandex:kinopoisk
+                  icon_color: |-
+                    {% if is_state(config.entity, 'Кинопоиск')%} deep-orange
+                    {% else %} '1'
+                    {% endif %}
+                  hold_action:
+                    action: none
+                  double_tap_action:
+                    action: none
+                  card_mod:
+                    style:
+                      .: |
+                        {% set hover = 'true' %}
+                        {% set stating = 'true' %}
+                        {% set state_on = 'Кинопоиск' %}
+                        {% include 'chip_settings_style.jinja' %}
+              - type: conditional
+                conditions:
+                  - condition: state
+                    entity: media_player.gostinaia
+                    state_not: standby
+                chip:
+                  type: template
+                  entity: sensor.appletv_app
+                  tap_action:
+                    action: perform-action
+                    perform_action: media_player.select_source
+                    target:
+                      entity_id: media_player.gostinaia
+                    data:
+                      source: VK Видео
+                  icon: fab:vk
+                  icon_color: |-
+                    {% if is_state(config.entity, 'VK Видео')%} pink
+                    {% else %} '1'
+                    {% endif %}
+                  hold_action:
+                    action: none
+                  double_tap_action:
+                    action: none
+                  card_mod:
+                    style:
+                      .: |
+                        {% set hover = 'true' %}
+                        {% set stating = 'true' %}
+                        {% set state_on = 'VK Видео' %}
+                        {% include 'chip_settings_style.jinja' %}
+              - type: conditional
+                conditions:
+                  - condition: state
+                    entity: media_player.gostinaia
+                    state_not: standby
+                chip:
+                  type: template
+                  entity: sensor.appletv_app
+                  tap_action:
+                    action: perform-action
+                    perform_action: media_player.select_source
+                    target:
+                      entity_id: media_player.gostinaia
+                    data:
+                      source: VLC
+                  icon: mdi:vlc
+                  icon_color: |-
+                    {% if is_state(config.entity, 'VLC')%} orange
+                    {% else %} '1'
+                    {% endif %}
+                  hold_action:
+                    action: none
+                  double_tap_action:
+                    action: none
+                  card_mod:
+                    style:
+                      .: |
+                        {% set hover = 'true' %}
+                        {% set stating = 'true' %}
+                        {% set state_on = 'VLC' %}
+                        {% include 'chip_settings_style.jinja' %}
+              - type: conditional
+                conditions:
+                  - condition: state
+                    entity: media_player.gostinaia
+                    state_not: standby
+                chip:
+                  type: template
+                  tap_action:
+                    action: none
+                  icon: mdi:circle-small
+                  icon_color: "1"
+                  hold_action:
+                    action: none
+                  double_tap_action:
+                    action: none
+                  card_mod:
+                    style:
+                      .: |
+                        {% set hover = 'false' %}
+                        {% set stating = 'false' %}
+                        {% include 'chip_settings_style.jinja' %}
               - type: template
                 tap_action:
                   action: navigate
                   navigation_path: "#appletv"
-                icon: mdi:dots-horizontal
+                icon: phu:apple-tv-gen2-remote
                 icon_color: "1"
                 hold_action:
                   action: none
@@ -463,20 +606,31 @@ cards:
                   style:
                     .: |
                       {% set hover = 'true' %}
-                      {% set icon_size = '1.2' %}
-                      {% include 'button_opacity.jinja' %}
+                      {% set stating = 'false' %}
+                      {% include 'chip_settings_style.jinja' %}
+              - type: template
+                tap_action:
+                  action: navigate
+                  navigation_path: "#samsung"
+                icon: mdi:soundbar
+                icon_color: "1"
+                hold_action:
+                  action: none
+                double_tap_action:
+                  action: none
+                card_mod:
+                  style:
+                    .: |
+                      {% set hover = 'true' %}
+                      {% set stating = 'false' %}
+                      {% include 'chip_settings_style.jinja' %}
             alignment: center
             layout_options:
               grid_columns: full
             card_mod:
               style:
                 .: |
-                  ha-card {
-                    --chip-background: none !important;
-                    --chip-border-radius: 1000px;
-                    --chip-height: 45px;
-                    --chip-spacing:20px;
-                    margin-top: 0px;
+                  {% include 'chip_buttons_small.jinja' %}
         grid_options:
           columns: 24
           rows: auto
@@ -531,8 +685,8 @@ cards:
         hash: "#appletv"
         name: AppleTV
         icon: bha:apple-tv
-        margin_top_mobile: calc(100vh - 650px)
-        margin_top_desktop: calc(100vh - 600px)
+        margin_top_mobile: calc(100vh - 450px)
+        margin_top_desktop: calc(100vh - 400px)
         tap_action:
           action: none
         double_tap_action:
@@ -583,116 +737,8 @@ cards:
                 --chip-font-size: 0.6em;
               }
               }
-      - type: custom:mushroom-media-player-card
-        entity: media_player.samsung
-        volume_controls:
-          - volume_set
-        layout: horizontal
-        primary_info: none
-        secondary_info: none
-        icon_type: none
-        card_mod:
-          style:
-            mushroom-media-player-volume-control$: |
-              mushroom-slider {
-                --main-color: #505050 !important;
-                --bg-color: #50505055 !important;
-                --control-height: 25px !important;
-
-              }
-            .: |
-              ha-card {
-                background: transparent !important;
-                opacity: 100%;
-                margin-left: 0px;
-                margin-right: 0px;
-                margin-top: 0px;
-                margin-bottom: 0px;
-                border-width: 0px;
-                  }
-              ha-card:hover {
-                opacity: 100%;
-                width: 100%;
-                }
       - type: custom:stack-in-card
         cards:
-          - type: custom:mushroom-chips-card
-            chips:
-              - type: template
-                tap_action:
-                  action: perform-action
-                  perform_action: media_player.select_source
-                  target:
-                    entity_id: media_player.gostinaia
-                  data:
-                    source: Кинопоиск
-                hold_action:
-                  action: none
-                double_tap_action:
-                  action: none
-                icon: yandex:kinopoisk
-                card_mod:
-                  style: |
-                    ha-card:hover {
-                      --chip-background: rgba(var(--rgb-primary-text-color), 0.1);
-                      }
-              - type: template
-                tap_action:
-                  action: perform-action
-                  perform_action: media_player.select_source
-                  target:
-                    entity_id: media_player.gostinaia
-                  data:
-                    source: VK Видео
-                hold_action:
-                  action: none
-                double_tap_action:
-                  action: none
-                icon: fab:vk
-                card_mod:
-                  style: |
-                    ha-card:hover {
-                      --chip-background: rgba(var(--rgb-primary-text-color), 0.1);
-                      }
-              - type: template
-                tap_action:
-                  action: perform-action
-                  perform_action: media_player.select_source
-                  target:
-                    entity_id: media_player.gostinaia
-                  data:
-                    source: VLC
-                hold_action:
-                  action: none
-                double_tap_action:
-                  action: none
-                icon: mdi:vlc
-                card_mod:
-                  style: |
-                    ha-card:hover {
-                      --chip-background: rgba(var(--rgb-primary-text-color), 0.1);
-                      }
-            alignment: justify
-            card_mod:
-              style: |
-                ha-card {
-                     margin: 20px 18px 0px 18px;
-                      --chip-background: rgba(var(--rgb-disabled), 0);
-                      --chip-border-width: 0;
-                      --chip-box-shadow: none;
-                      --chip-border-radius: 15px;
-                      --chip-height: 45px;
-                      --chip-padding: 15px;
-                      --chip-spacing: 20px;
-                }
-          - type: custom:bubble-card
-            card_type: separator
-            styles: |
-              .bubble-line {
-                background: var(--primary-text-color);
-                opacity: 0.1;
-              }
-            sub_button: []
           - type: custom:mushroom-chips-card
             chips:
               - type: template

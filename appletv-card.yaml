@@ -110,6 +110,39 @@ cards:
                   ha-card:active {
                     scale: 0.8;
                   }  
+          - type: conditional
+            conditions:
+              - condition: user
+                users:
+                  - 1a1897c1b5d24702ae00645a47e23e99
+            chip:
+              type: template
+              tap_action:
+                action: none
+              hold_action:
+                action: none
+              double_tap_action:
+                action: none
+              content: ""
+              icon: mdi:sync-alert
+              icon_color: |
+                {% if states('media_player.gostinaia') == 'standby' and
+                states('media_player.samsungtv') == 'off' %}
+                   0,0,0,0
+                 {% elif states('media_player.samsungtv') == 'on' and states('media_player.gostinaia') not in ['unavailable','standby'] %}
+                   0,0,0,0
+                 {% else %}
+                   red
+                 {% endif %}
+              card_mod:
+                style: |
+                  ha-card {
+                    opacity: 0.4 }   
+                  ha-card:hover {
+                    opacity: 1 }     
+                  ha-card:active {
+                    scale: 0.8;
+                  }  
           - type: spacer
           - type: template
             tap_action:
@@ -197,7 +230,7 @@ cards:
           z-index: 1 !important;
           --chip-height: 60px;
           --chip-spacing: 20px;
-          --chip-background: transparent;
+          --chip-background: transparent !important;
           --chip-icon-size: 35px; 
           --chip-border-radius: 100px;
           --chip-padding: 12px;
@@ -247,14 +280,16 @@ cards:
             layout: vertical
             icon_color: ""
             tap_action:
-              action: more-info
+              action: none
             double_tap_action:
               action: none
             fill_container: true
+            hold_action:
+              action: none
             card_mod:
               style: |
                 {% set domain = 'media' %}
-                {% set file = '/local/cards_img/atv1.png' %}
+                {% set file = '/local/cards_img/atv3.JPG' %}
                 {% set entity = 'media_player.gostinaia' %}
                 {% set state_on = 'playing' %}
 
@@ -365,7 +400,7 @@ cards:
                       {% set hover = 'true' %}
                       {% include 'button_opacity.jinja' %}
               - type: template
-                entity: fan.ac_switch
+                entity: media_player.gostinaia
                 tap_action:
                   action: call-service
                   service: media_player.media_play_pause
@@ -567,7 +602,7 @@ cards:
               }
             .: |
               ha-card {
-                background: transparent;
+                background: transparent !important;
                 opacity: 100%;
                 margin-left: 0px;
                 margin-right: 0px;
@@ -579,322 +614,85 @@ cards:
                 opacity: 100%;
                 width: 100%;
                 }
-      - type: custom:bubble-card
-        card_type: separator
-        name: Приложения
-        icon: mdi:apps
-        styles: |
-          .bubble-line {
-            background: var(--primary-text-color);
-            opacity: 0.1;
-          }
-        sub_button: []
-      - square: false
-        type: grid
-        cards:
-          - type: custom:vertical-stack-in-card
-            cards:
-              - type: custom:mushroom-template-card
-                primary: ""
-                secondary: ""
-                icon: yandex:kinopoisk
-                badge_icon: ""
-                tap_action:
-                  action: perform-action
-                  perform_action: media_player.select_source
-                  target:
-                    entity_id: media_player.gostinaia
-                  data:
-                    source: Кинопоиск
-                icon_color: "1"
-                double_tap_action:
-                  action: none
-                badge_color: ""
-                fill_container: true
-                picture: ""
-                hold_action:
-                  action: none
-                layout: horizontal
-                card_mod:
-                  style:
-                    mushroom-shape-icon$: |
-                      .shape {
-                        --shape-color: none !important;
-                        --icon-symbol-size:28px;
-                        padding-right: 100px;
-                      }
-                    .: |
-                      ha-card { 
-                        background-color: rgba(255,255,255,0) }};
-                      }  
-              - type: custom:mushroom-template-card
-                primary: Кинопоиск
-                secondary: ""
-                icon: ""
-                badge_icon: ""
-                tap_action:
-                  action: perform-action
-                  perform_action: media_player.select_source
-                  target:
-                    entity_id: media_player.gostinaia
-                  data:
-                    source: Кинопоиск
-                icon_color: ""
-                layout: horizontal
-                double_tap_action:
-                  action: none
-                badge_color: ""
-                fill_container: true
-                picture: ""
-                hold_action:
-                  action: none
-                card_mod:
-                  style:
-                    mushroom-state-info$: |
-                      .secondary {
-                        position: absolute;
-                        top: -10% !important;
-                        left: 10px;
-                        }
-                      .container {
-                       --card-secondary-font-size: 13.5px;
-                       --card-secondary-font-weight: bolder;
-                    .: |
-                      ha-card { 
-                        background-color: rgba(255,255,255,0) }};
-                      }  
-            card_mod:
-              style:
-                .: |
-                  {% include 'bubble_card_stack.jinja' %}
-          - type: custom:vertical-stack-in-card
-            cards:
-              - type: custom:mushroom-template-card
-                primary: ""
-                secondary: ""
-                icon: fab:vk
-                badge_icon: ""
-                tap_action:
-                  action: perform-action
-                  perform_action: media_player.select_source
-                  target:
-                    entity_id: media_player.gostinaia
-                  data:
-                    source: VK Видео
-                icon_color: "1"
-                double_tap_action:
-                  action: none
-                badge_color: ""
-                fill_container: true
-                picture: ""
-                hold_action:
-                  action: none
-                layout: horizontal
-                card_mod:
-                  style:
-                    mushroom-shape-icon$: |
-                      .shape {
-                        --shape-color: none !important;
-                        --icon-symbol-size:28px;
-                        padding-right: 100px;
-                      }
-                    .: |
-                      ha-card { 
-                        background-color: rgba(255,255,255,0) }};
-                      }  
-              - type: custom:mushroom-template-card
-                primary: ВК Видео
-                secondary: ""
-                icon: ""
-                badge_icon: ""
-                tap_action:
-                  action: perform-action
-                  perform_action: media_player.select_source
-                  target:
-                    entity_id: media_player.gostinaia
-                  data:
-                    source: VK Видео
-                icon_color: ""
-                layout: horizontal
-                double_tap_action:
-                  action: none
-                badge_color: ""
-                fill_container: true
-                picture: ""
-                hold_action:
-                  action: none
-                card_mod:
-                  style:
-                    mushroom-state-info$: |
-                      .secondary {
-                        position: absolute;
-                        top: -10% !important;
-                        left: 10px;
-                        }
-                      .container {
-                       --card-secondary-font-size: 13.5px;
-                       --card-secondary-font-weight: bolder;
-                    .: |
-                      ha-card { 
-                        background-color: rgba(255,255,255,0) }};
-                      }  
-            card_mod:
-              style:
-                .: |
-                  {% include 'bubble_card_stack.jinja' %}
-          - type: custom:vertical-stack-in-card
-            cards:
-              - type: custom:mushroom-template-card
-                primary: ""
-                secondary: ""
-                icon: mdi:youtube
-                badge_icon: ""
-                tap_action:
-                  action: perform-action
-                  perform_action: media_player.select_source
-                  target:
-                    entity_id: media_player.gostinaia
-                  data:
-                    source: YouTube
-                icon_color: "1"
-                double_tap_action:
-                  action: none
-                badge_color: ""
-                fill_container: true
-                picture: ""
-                hold_action:
-                  action: none
-                layout: horizontal
-                card_mod:
-                  style:
-                    mushroom-shape-icon$: |
-                      .shape {
-                        --shape-color: none !important;
-                        --icon-symbol-size:28px;
-                        padding-right: 100px;
-                      }
-                    .: |
-                      ha-card { 
-                        background-color: rgba(255,255,255,0) }};
-                      }  
-              - type: custom:mushroom-template-card
-                primary: YouTube
-                secondary: ""
-                icon: ""
-                badge_icon: ""
-                tap_action:
-                  action: perform-action
-                  perform_action: media_player.select_source
-                  target:
-                    entity_id: media_player.gostinaia
-                  data:
-                    source: YouTube
-                icon_color: ""
-                layout: horizontal
-                double_tap_action:
-                  action: none
-                badge_color: ""
-                fill_container: true
-                picture: ""
-                hold_action:
-                  action: none
-                card_mod:
-                  style:
-                    mushroom-state-info$: |
-                      .secondary {
-                        position: absolute;
-                        top: -10% !important;
-                        left: 10px;
-                        }
-                      .container {
-                       --card-secondary-font-size: 13.5px;
-                       --card-secondary-font-weight: bolder;
-                    .: |
-                      ha-card { 
-                        background-color: rgba(255,255,255,0) }};
-                      }  
-            card_mod:
-              style:
-                .: |
-                  {% include 'bubble_card_stack.jinja' %}
-          - type: custom:vertical-stack-in-card
-            cards:
-              - type: custom:mushroom-template-card
-                primary: ""
-                secondary: ""
-                icon: mdi:vlc
-                badge_icon: ""
-                tap_action:
-                  action: perform-action
-                  perform_action: media_player.select_source
-                  target:
-                    entity_id: media_player.gostinaia
-                  data:
-                    source: VLC
-                icon_color: "1"
-                double_tap_action:
-                  action: none
-                badge_color: ""
-                fill_container: true
-                picture: ""
-                hold_action:
-                  action: none
-                layout: horizontal
-                card_mod:
-                  style:
-                    mushroom-shape-icon$: |
-                      .shape {
-                        --shape-color: none !important;
-                        --icon-symbol-size:28px;
-                        padding-right: 100px;
-                      }
-                    .: |
-                      ha-card { 
-                        background-color: rgba(255,255,255,0) }};
-                      }  
-              - type: custom:mushroom-template-card
-                primary: VLC
-                secondary: ""
-                icon: ""
-                badge_icon: ""
-                tap_action:
-                  action: perform-action
-                  perform_action: media_player.select_source
-                  target:
-                    entity_id: media_player.gostinaia
-                  data:
-                    source: VLC
-                icon_color: ""
-                layout: horizontal
-                double_tap_action:
-                  action: none
-                badge_color: ""
-                fill_container: true
-                picture: ""
-                hold_action:
-                  action: none
-                card_mod:
-                  style:
-                    mushroom-state-info$: |
-                      .secondary {
-                        position: absolute;
-                        top: -10% !important;
-                        left: 10px;
-                        }
-                      .container {
-                       --card-secondary-font-size: 13.5px;
-                       --card-secondary-font-weight: bolder;
-                    .: |
-                      ha-card { 
-                        background-color: rgba(255,255,255,0) }};
-                      }  
-            card_mod:
-              style:
-                .: |
-                  {% include 'bubble_card_stack.jinja' %}
-        columns: 4
       - type: custom:stack-in-card
         cards:
+          - type: custom:mushroom-chips-card
+            chips:
+              - type: template
+                tap_action:
+                  action: perform-action
+                  perform_action: media_player.select_source
+                  target:
+                    entity_id: media_player.gostinaia
+                  data:
+                    source: Кинопоиск
+                hold_action:
+                  action: none
+                double_tap_action:
+                  action: none
+                icon: yandex:kinopoisk
+                card_mod:
+                  style: |
+                    ha-card:hover {
+                      --chip-background: rgba(var(--rgb-primary-text-color), 0.1);
+                      }
+              - type: template
+                tap_action:
+                  action: perform-action
+                  perform_action: media_player.select_source
+                  target:
+                    entity_id: media_player.gostinaia
+                  data:
+                    source: VK Видео
+                hold_action:
+                  action: none
+                double_tap_action:
+                  action: none
+                icon: fab:vk
+                card_mod:
+                  style: |
+                    ha-card:hover {
+                      --chip-background: rgba(var(--rgb-primary-text-color), 0.1);
+                      }
+              - type: template
+                tap_action:
+                  action: perform-action
+                  perform_action: media_player.select_source
+                  target:
+                    entity_id: media_player.gostinaia
+                  data:
+                    source: VLC
+                hold_action:
+                  action: none
+                double_tap_action:
+                  action: none
+                icon: mdi:vlc
+                card_mod:
+                  style: |
+                    ha-card:hover {
+                      --chip-background: rgba(var(--rgb-primary-text-color), 0.1);
+                      }
+            alignment: justify
+            card_mod:
+              style: |
+                ha-card {
+                     margin: 20px 18px 0px 18px;
+                      --chip-background: rgba(var(--rgb-disabled), 0);
+                      --chip-border-width: 0;
+                      --chip-box-shadow: none;
+                      --chip-border-radius: 15px;
+                      --chip-height: 45px;
+                      --chip-padding: 15px;
+                      --chip-spacing: 20px;
+                }
+          - type: custom:bubble-card
+            card_type: separator
+            styles: |
+              .bubble-line {
+                background: var(--primary-text-color);
+                opacity: 0.1;
+              }
+            sub_button: []
           - type: custom:mushroom-chips-card
             chips:
               - type: template
@@ -1178,7 +976,7 @@ cards:
             .: |
               ha-card {
                 margin-top: 0px;
-                background: transparent;
+                background: transparent !important;
                 border-width: 0px;
                   }
   - type: vertical-stack
@@ -1249,7 +1047,7 @@ cards:
               }
             .: |
               ha-card {
-                background: transparent;
+                background: transparent !important;
                 border-width: 0px;
                   }
       - type: custom:stack-in-card
@@ -1634,13 +1432,13 @@ cards:
           style:
             .: |
               ha-card {
-                background: transparent;
+                background: transparent !important;
                 border-width: 0px;
 
                   }
   - type: heading
     icon: phu:apple-tv
-    heading: "3.0"
+    heading: 0.3.1
     heading_style: title
     visibility:
       - condition: state

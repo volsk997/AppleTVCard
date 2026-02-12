@@ -351,24 +351,60 @@ cards:
             card:
               type: custom:mushroom-chips-card
               chips:
-                - type: template
-                  icon: fas:backward-step
-                  icon_color: "1"
-                  tap_action:
-                    action: call-service
-                    service: media_player.media_previous_track
-                    target:
-                      entity_id: media_player.gostinaia
-                  hold_action:
-                    action: none
-                  double_tap_action:
-                    action: none
-                  card_mod:
-                    style:
-                      .: |
-                        {% set hover = 'true' %}
-                        {% set stating = 'false' %}
-                        {% include 'chip_settings_style.jinja' %}
+                - type: conditional
+                  conditions:
+                    - condition: state
+                      entity: sensor.appletv_app
+                      state: Кинопоиск
+                  chip:
+                    type: template
+                    hold_action:
+                      action: none
+                    double_tap_action:
+                      action: none
+                    icon: fas:backward-step
+                    tap_action:
+                      action: perform-action
+                      perform_action: remote.send_command
+                      target:
+                        entity_id: remote.gostinaia
+                      data:
+                        num_repeats: 1
+                        delay_secs: 0.4
+                        hold_secs: 0
+                        command:
+                          - down
+                          - left
+                    card_mod:
+                      style:
+                        .: |
+                          {% set hover = 'true' %}
+                          {% set stating = 'false' %}
+                          {% include 'chip_settings_style.jinja' %}
+                - type: conditional
+                  conditions:
+                    - condition: state
+                      entity: sensor.appletv_app
+                      state_not: Кинопоиск
+                  chip:
+                    type: template
+                    icon: fas:backward-step
+                    icon_color: "1"
+                    tap_action:
+                      action: call-service
+                      service: media_player.media_previous_track
+                      target:
+                        entity_id: media_player.gostinaia
+                    hold_action:
+                      action: none
+                    double_tap_action:
+                      action: none
+                    card_mod:
+                      style:
+                        .: |
+                          {% set hover = 'true' %}
+                          {% set stating = 'false' %}
+                          {% include 'chip_settings_style.jinja' %}
                 - type: template
                   entity: media_player.gostinaia
                   tap_action:
@@ -399,24 +435,60 @@ cards:
                         !important' %}
 
                         {% include 'chip_settings_style.jinja' %}
-                - type: template
-                  icon: fas:forward-step
-                  icon_color: "1"
-                  tap_action:
-                    action: call-service
-                    service: media_player.media_next_track
-                    target:
-                      entity_id: media_player.gostinaia
-                  hold_action:
-                    action: none
-                  double_tap_action:
-                    action: none
-                  card_mod:
-                    style:
-                      .: |
-                        {% set hover = 'true' %}
-                        {% set stating = 'false' %}
-                        {% include 'chip_settings_style.jinja' %}
+                - type: conditional
+                  conditions:
+                    - condition: state
+                      entity: sensor.appletv_app
+                      state_not: Кинопоиск
+                  chip:
+                    type: template
+                    icon: fas:forward-step
+                    icon_color: "1"
+                    tap_action:
+                      action: call-service
+                      service: media_player.media_next_track
+                      target:
+                        entity_id: media_player.gostinaia
+                    hold_action:
+                      action: none
+                    double_tap_action:
+                      action: none
+                    card_mod:
+                      style:
+                        .: |
+                          {% set hover = 'true' %}
+                          {% set stating = 'false' %}
+                          {% include 'chip_settings_style.jinja' %}
+                - type: conditional
+                  conditions:
+                    - condition: state
+                      entity: sensor.appletv_app
+                      state: Кинопоиск
+                  chip:
+                    type: template
+                    hold_action:
+                      action: none
+                    double_tap_action:
+                      action: none
+                    icon: fas:forward-step
+                    tap_action:
+                      action: perform-action
+                      perform_action: remote.send_command
+                      target:
+                        entity_id: remote.gostinaia
+                      data:
+                        num_repeats: 1
+                        delay_secs: 0.4
+                        hold_secs: 0
+                        command:
+                          - down
+                          - right
+                    card_mod:
+                      style:
+                        .: |
+                          {% set hover = 'true' %}
+                          {% set stating = 'false' %}
+                          {% include 'chip_settings_style.jinja' %}
               alignment: justify
               card_mod:
                 style:
@@ -529,7 +601,7 @@ cards:
       cards:
         - type: heading
           icon: phu:apple-tv
-          heading: 0.3.8
+          heading: 0.3.8.1
           heading_style: title
           card_mod:
             style: |
@@ -573,10 +645,11 @@ cards:
         chips:
           - type: back
             card_mod:
-              style: |
-                ha-card:hover {
-                  --chip-background: rgba(var(--rgb-primary-text-color), 0.1);
-                  }
+              style:
+                .: |
+                  {% set hover = 'true' %}
+                  {% set stating = 'false' %}
+                  {% include 'chip_settings_style.jinja' %}
           - type: conditional
             conditions:
               - condition: state
@@ -744,22 +817,22 @@ cards:
         card_mod:
           style:
             mushroom-template-chip:nth-child(1)$: |
-              {% set opacity = 0.3 %}
+              {% set opacity = 0 %}
               {% include 'shadow_chip_icon.jinja' %}
             mushroom-template-chip:nth-child(2)$: |
-              {% set opacity = 0.3 %}
+              {% set opacity = 0 %}
               {% include 'shadow_chip_icon.jinja' %}
             mushroom-template-chip:nth-child(3)$: |
-              {% set opacity = 0.3 %}
+              {% set opacity = 0 %}
               {% include 'shadow_chip_icon.jinja' %}
             mushroom-template-chip:nth-child(4)$: |
-              {% set opacity = 0.3 %}
+              {% set opacity = 0 %}
               {% include 'shadow_chip_icon.jinja' %}
             mushroom-template-chip:nth-child(5)$: |
-              {% set opacity = 0.3 %}
+              {% set opacity = 0 %}
               {% include 'shadow_chip_icon.jinja' %}
             mushroom-template-chip:nth-child(6)$: |
-              {% set opacity = 0.3 %}
+              {% set opacity = 0 %}
               {% include 'shadow_chip_icon.jinja' %}
             .: |
 

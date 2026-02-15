@@ -591,26 +591,6 @@ cards:
       style: |
         {% set top = 160 %}
         {% include 'fixed_settings.jinja' %}
-  - type: conditional
-    conditions:
-      - condition: state
-        entity: "12"
-        state: "12"
-    card:
-      type: vertical-stack
-      cards:
-        - type: heading
-          icon: phu:apple-tv
-          heading: 0.3.8.1
-          heading_style: title
-          card_mod:
-            style: |
-              ha-card {
-                   background: rgba(100,0,200) !important;
-                 }
-    grid_options:
-      columns: 6
-      rows: auto
   - type: vertical-stack
     cards:
       - type: conditional
@@ -910,6 +890,12 @@ cards:
             icon: ""
           - type: spacer
           - type: back
+            card_mod:
+              style:
+                .: |
+                  {% set hover = 'true' %}
+                  {% set stating = 'false' %}
+                  {% include 'chip_settings_style.jinja' %}
         layout_options:
           grid_columns: full
         card_mod:
@@ -919,19 +905,7 @@ cards:
                 --card-mod-icon: mdi:close;
               }
             .: |
-              ha-card {
-                margin: 12px 0px 0px;
-                --chip-background: none;
-                --chip-border-width: 0;
-                --chip-box-shadow: none;
-                --chip-border-radius: 12px;
-                --chip-height: 40px;
-                --chip-padding: 14px;
-                --chip-spacing: -35px;
-                --chip-icon-size: 0.7em;
-                --chip-font-size: 0.6em;
-              }
-              }
+              {% include 'pop_up_title.jinja' %}
       - type: custom:stack-in-card
         cards:
           - type: custom:mushroom-chips-card
@@ -953,10 +927,11 @@ cards:
                   action: none
                 icon: fas:chevron-left
                 card_mod:
-                  style: |
-                    ha-card:hover {
-                      --chip-background: rgba(var(--rgb-primary-text-color), 0.1);
-                      }
+                  style:
+                    .: |
+                      {% set hover = 'true' %}
+                      {% set stating = 'false' %}
+                      {% include 'chip_settings_style.jinja' %}
               - type: template
                 icon: mdi:circle-small
                 hold_action:
@@ -974,10 +949,11 @@ cards:
                     hold_secs: 0
                     command: up
                 card_mod:
-                  style: |
-                    ha-card:hover {
-                      --chip-background: rgba(var(--rgb-primary-text-color), 0.1);
-                      }
+                  style:
+                    .: |
+                      {% set hover = 'true' %}
+                      {% set stating = 'false' %}
+                      {% include 'chip_settings_style.jinja' %}
               - type: template
                 tap_action:
                   action: perform-action
@@ -1003,23 +979,19 @@ cards:
                   action: none
                 icon: fas:display
                 card_mod:
-                  style: |
-                    ha-card:hover {
-                      --chip-background: rgba(var(--rgb-primary-text-color), 0.1);
-                      }
+                  style:
+                    .: |
+                      {% set hover = 'true' %}
+                      {% set stating = 'false' %}
+                      {% include 'chip_settings_style.jinja' %}
             alignment: justify
             card_mod:
               style: |
-                ha-card {
-                     margin: 20px 18px 0px 18px;
-                      --chip-background: rgba(var(--rgb-disabled), 0);
-                      --chip-border-width: 0;
-                      --chip-box-shadow: none;
-                      --chip-border-radius: 15px;
-                      --chip-height: 45px;
-                      --chip-padding: 15px;
-                      --chip-spacing: 20px;
-                }
+                {% set left = 20 %}
+                {% set top = 20 %}
+                {% set right = 20 %}
+                {% set bottom = 5 %}
+                {% include 'pop_up_buttons.jinja' %}
           - type: custom:mushroom-chips-card
             chips:
               - type: template
@@ -1035,10 +1007,11 @@ cards:
                 double_tap_action:
                   action: none
                 card_mod:
-                  style: |
-                    ha-card:hover {
-                      --chip-background: rgba(var(--rgb-primary-text-color), 0.1);
-                      }
+                  style:
+                    .: |
+                      {% set hover = 'true' %}
+                      {% set stating = 'false' %}
+                      {% include 'chip_settings_style.jinja' %}
               - type: spacer
               - type: template
                 tap_action:
@@ -1057,10 +1030,11 @@ cards:
                   action: none
                 icon: mdi:circle-small
                 card_mod:
-                  style: |
-                    ha-card:hover {
-                      --chip-background: rgba(var(--rgb-primary-text-color), 0.1);
-                      }
+                  style:
+                    .: |
+                      {% set hover = 'true' %}
+                      {% set stating = 'false' %}
+                      {% include 'chip_settings_style.jinja' %}
               - type: template
                 icon: mdi:circle-medium
                 hold_action:
@@ -1078,10 +1052,11 @@ cards:
                     hold_secs: 0
                     command: select
                 card_mod:
-                  style: |
-                    ha-card:hover {
-                      --chip-background: rgba(var(--rgb-primary-text-color), 0.1);
-                      }
+                  style:
+                    .: |
+                      {% set hover = 'true' %}
+                      {% set stating = 'false' %}
+                      {% include 'chip_settings_style.jinja' %}
               - type: template
                 tap_action:
                   action: perform-action
@@ -1099,10 +1074,11 @@ cards:
                   action: none
                 icon: mdi:circle-small
                 card_mod:
-                  style: |
-                    ha-card:hover {
-                      --chip-background: rgba(var(--rgb-primary-text-color), 0.1);
-                      }
+                  style:
+                    .: |
+                      {% set hover = 'true' %}
+                      {% set stating = 'false' %}
+                      {% include 'chip_settings_style.jinja' %}
               - type: spacer
               - type: template
                 icon: fas:volume-high
@@ -1116,23 +1092,18 @@ cards:
                 double_tap_action:
                   action: none
                 card_mod:
-                  style: |
-                    ha-card:hover {
-                      --chip-background: rgba(var(--rgb-primary-text-color), 0.1);
-                      }
+                  style:
+                    .: |
+                      {% set hover = 'true' %}
+                      {% set stating = 'false' %}
+                      {% include 'chip_settings_style.jinja' %}
             alignment: center
             card_mod:
               style: |
-                ha-card {
-                     margin: 18px 18px 20px 18px;
-                      --chip-background: rgba(var(--rgb-disabled), 0);
-                      --chip-border-width: 0;
-                      --chip-box-shadow: none;
-                      --chip-border-radius: 15px;
-                      --chip-height: 45px;
-                      --chip-padding: 15px;
-                      --chip-spacing: 20px;
-                }
+                {% set left = 20 %}
+                {% set right = 20 %}
+                {% set bottom = 5 %}
+                {% include 'pop_up_buttons.jinja' %}
           - type: custom:mushroom-chips-card
             chips:
               - type: template
@@ -1152,10 +1123,11 @@ cards:
                     hold_secs: 0
                     command: skip_backward
                 card_mod:
-                  style: |
-                    ha-card:hover {
-                      --chip-background: rgba(var(--rgb-primary-text-color), 0.1);
-                      }
+                  style:
+                    .: |
+                      {% set hover = 'true' %}
+                      {% set stating = 'false' %}
+                      {% include 'chip_settings_style.jinja' %}
               - type: template
                 icon: mdi:circle-small
                 hold_action:
@@ -1173,10 +1145,11 @@ cards:
                     hold_secs: 0
                     command: down
                 card_mod:
-                  style: |
-                    ha-card:hover {
-                      --chip-background: rgba(var(--rgb-primary-text-color), 0.1);
-                      }
+                  style:
+                    .: |
+                      {% set hover = 'true' %}
+                      {% set stating = 'false' %}
+                      {% include 'chip_settings_style.jinja' %}
               - type: template
                 icon: mdi:fast-forward-10
                 hold_action:
@@ -1195,23 +1168,19 @@ cards:
                     command:
                       - skip_forward
                 card_mod:
-                  style: |
-                    ha-card:hover {
-                      --chip-background: rgba(var(--rgb-primary-text-color), 0.1);
-                      }
+                  style:
+                    .: |
+                      {% set hover = 'true' %}
+                      {% set stating = 'false' %}
+                      {% include 'chip_settings_style.jinja' %}
             alignment: justify
             card_mod:
               style: |
-                ha-card {
-                     margin: 0px 18px 10px 18px;
-                      --chip-background: rgba(var(--rgb-disabled), 0);
-                      --chip-border-width: 0;
-                      --chip-box-shadow: none;
-                      --chip-border-radius: 15px;
-                      --chip-height: 45px;
-                      --chip-padding: 15px;
-                      --chip-spacing: 20px;
-                }
+                {% set left = 20 %}
+                {% set top = 0 %}
+                {% set right = 20 %}
+
+                {% include 'pop_up_buttons.jinja' %}
         card_mod:
           style:
             .: |
@@ -1260,6 +1229,12 @@ cards:
             icon: ""
           - type: spacer
           - type: back
+            card_mod:
+              style:
+                .: |
+                  {% set hover = 'true' %}
+                  {% set stating = 'false' %}
+                  {% include 'chip_settings_style.jinja' %}
         layout_options:
           grid_columns: full
         card_mod:
@@ -1269,19 +1244,7 @@ cards:
                 --card-mod-icon: mdi:close;
               }
             .: |
-              ha-card {
-                margin: 12px 0px 0px;
-                --chip-background: none;
-                --chip-border-width: 0;
-                --chip-box-shadow: none;
-                --chip-border-radius: 12px;
-                --chip-height: 40px;
-                --chip-padding: 14px;
-                --chip-spacing: -35px;
-                --chip-icon-size: 0.7em;
-                --chip-font-size: 0.6em;
-              }
-              }
+              {% include 'pop_up_title.jinja' %}
       - type: custom:mushroom-media-player-card
         entity: media_player.samsung
         volume_controls:
@@ -1304,6 +1267,10 @@ cards:
                 background: transparent !important;
                 border-width: 0px;
                   }
+              @media (pointer: fine) {
+                ha-card:hover {
+                  background: {{(states('input_text.s_card_background_off_hover')) }};
+              }
       - type: custom:stack-in-card
         cards:
           - type: custom:mushroom-chips-card
@@ -1326,10 +1293,11 @@ cards:
                   action: none
                 icon: mdi:volume-mute
                 card_mod:
-                  style: |
-                    ha-card:hover {
-                      --chip-background: rgba(var(--rgb-primary-text-color), 0.1);
-                      }
+                  style:
+                    .: |
+                      {% set hover = 'true' %}
+                      {% set stating = 'false' %}
+                      {% include 'chip_settings_style.jinja' %}
               - type: template
                 icon: mdi:circle-small
                 tap_action:
@@ -1348,10 +1316,11 @@ cards:
                 double_tap_action:
                   action: none
                 card_mod:
-                  style: |
-                    ha-card:hover {
-                      --chip-background: rgba(var(--rgb-primary-text-color), 0.1);
-                      }
+                  style:
+                    .: |
+                      {% set hover = 'true' %}
+                      {% set stating = 'false' %}
+                      {% include 'chip_settings_style.jinja' %}
               - type: template
                 tap_action:
                   action: perform-action
@@ -1370,23 +1339,19 @@ cards:
                   action: none
                 icon: mdi:import
                 card_mod:
-                  style: |
-                    ha-card:hover {
-                      --chip-background: rgba(var(--rgb-primary-text-color), 0.1);
-                      }
+                  style:
+                    .: |
+                      {% set hover = 'true' %}
+                      {% set stating = 'false' %}
+                      {% include 'chip_settings_style.jinja' %}
             alignment: justify
             card_mod:
               style: |
-                ha-card {
-                     margin: 20px 18px 0px 18px;
-                      --chip-background: rgba(var(--rgb-disabled), 0);
-                      --chip-border-width: 0;
-                      --chip-box-shadow: none;
-                      --chip-border-radius: 15px;
-                      --chip-height: 45px;
-                      --chip-padding: 15px;
-                      --chip-spacing: 20px;
-                }
+                {% set left = 20 %}
+                {% set top = 20 %}
+                {% set right = 20 %}
+                {% set bottom = 5 %}
+                {% include 'pop_up_buttons.jinja' %}
           - type: custom:mushroom-chips-card
             chips:
               - type: template
@@ -1407,10 +1372,11 @@ cards:
                   action: none
                 icon: mdi:volume-medium
                 card_mod:
-                  style: |
-                    ha-card:hover {
-                      --chip-background: rgba(var(--rgb-primary-text-color), 0.1);
-                      }
+                  style:
+                    .: |
+                      {% set hover = 'true' %}
+                      {% set stating = 'false' %}
+                      {% include 'chip_settings_style.jinja' %}
               - type: spacer
               - type: template
                 icon: mdi:circle-small
@@ -1430,10 +1396,11 @@ cards:
                 double_tap_action:
                   action: none
                 card_mod:
-                  style: |
-                    ha-card:hover {
-                      --chip-background: rgba(var(--rgb-primary-text-color), 0.1);
-                      }
+                  style:
+                    .: |
+                      {% set hover = 'true' %}
+                      {% set stating = 'false' %}
+                      {% include 'chip_settings_style.jinja' %}
               - type: template
                 tap_action:
                   action: perform-action
@@ -1453,10 +1420,11 @@ cards:
                 icon: mdi:play-pause
                 icon_color: "1"
                 card_mod:
-                  style: |
-                    ha-card:hover {
-                      --chip-background: rgba(var(--rgb-primary-text-color), 0.1);
-                      }
+                  style:
+                    .: |
+                      {% set hover = 'true' %}
+                      {% set stating = 'false' %}
+                      {% include 'chip_settings_style.jinja' %}
               - type: template
                 icon: mdi:circle-small
                 tap_action:
@@ -1475,10 +1443,11 @@ cards:
                 double_tap_action:
                   action: none
                 card_mod:
-                  style: |
-                    ha-card:hover {
-                      --chip-background: rgba(var(--rgb-primary-text-color), 0.1);
-                      }
+                  style:
+                    .: |
+                      {% set hover = 'true' %}
+                      {% set stating = 'false' %}
+                      {% include 'chip_settings_style.jinja' %}
               - type: spacer
               - type: template
                 tap_action:
@@ -1498,23 +1467,18 @@ cards:
                   action: none
                 icon: mdi:volume-high
                 card_mod:
-                  style: |
-                    ha-card:hover {
-                      --chip-background: rgba(var(--rgb-primary-text-color), 0.1);
-                      }
+                  style:
+                    .: |
+                      {% set hover = 'true' %}
+                      {% set stating = 'false' %}
+                      {% include 'chip_settings_style.jinja' %}
             alignment: center
             card_mod:
               style: |
-                ha-card {
-                     margin: 18px 18px 20px 18px;
-                      --chip-background: rgba(var(--rgb-disabled), 0);
-                      --chip-border-width: 0;
-                      --chip-box-shadow: none;
-                      --chip-border-radius: 15px;
-                      --chip-height: 45px;
-                      --chip-padding: 15px;
-                      --chip-spacing: 20px;
-                }
+                {% set left = 20 %}
+                {% set right = 20 %}
+                {% set bottom = 5 %}
+                {% include 'pop_up_buttons.jinja' %}
           - type: custom:mushroom-chips-card
             chips:
               - type: template
@@ -1535,10 +1499,11 @@ cards:
                 double_tap_action:
                   action: none
                 card_mod:
-                  style: |
-                    ha-card:hover {
-                      --chip-background: rgba(var(--rgb-primary-text-color), 0.1);
-                      }
+                  style:
+                    .: |
+                      {% set hover = 'true' %}
+                      {% set stating = 'false' %}
+                      {% include 'chip_settings_style.jinja' %}
               - type: template
                 icon: mdi:circle-small
                 tap_action:
@@ -1557,10 +1522,11 @@ cards:
                 double_tap_action:
                   action: none
                 card_mod:
-                  style: |
-                    ha-card:hover {
-                      --chip-background: rgba(var(--rgb-primary-text-color), 0.1);
-                      }
+                  style:
+                    .: |
+                      {% set hover = 'true' %}
+                      {% set stating = 'false' %}
+                      {% include 'chip_settings_style.jinja' %}
               - type: template
                 icon: mdi:bluetooth-connect
                 tap_action:
@@ -1579,23 +1545,18 @@ cards:
                 double_tap_action:
                   action: none
                 card_mod:
-                  style: |
-                    ha-card:hover {
-                      --chip-background: rgba(var(--rgb-primary-text-color), 0.1);
-                      }
+                  style:
+                    .: |
+                      {% set hover = 'true' %}
+                      {% set stating = 'false' %}
+                      {% include 'chip_settings_style.jinja' %}
             alignment: justify
             card_mod:
               style: |
-                ha-card {
-                     margin: 0px 18px 10px 18px;
-                      --chip-background: rgba(var(--rgb-disabled), 0);
-                      --chip-border-width: 0;
-                      --chip-box-shadow: none;
-                      --chip-border-radius: 15px;
-                      --chip-height: 45px;
-                      --chip-padding: 15px;
-                      --chip-spacing: 20px;
-                }
+                {% set left = 20 %}
+                {% set right = 20 %}
+                {% set bottom = 5 %}
+                {% include 'pop_up_buttons.jinja' %}
           - type: custom:mushroom-chips-card
             chips:
               - type: template
@@ -1617,10 +1578,11 @@ cards:
                   action: none
                 entity: ""
                 card_mod:
-                  style: |
-                    ha-card:hover {
-                      --chip-background: rgba(var(--rgb-primary-text-color), 0.1);
-                      }
+                  style:
+                    .: |
+                      {% set hover = 'true' %}
+                      {% set stating = 'false' %}
+                      {% include 'chip_settings_style.jinja' %}
               - type: spacer
               - type: template
                 icon: mdi:cog
@@ -1641,10 +1603,11 @@ cards:
                   action: none
                 entity: ""
                 card_mod:
-                  style: |
-                    ha-card:hover {
-                      --chip-background: rgba(var(--rgb-primary-text-color), 0.1);
-                      }
+                  style:
+                    .: |
+                      {% set hover = 'true' %}
+                      {% set stating = 'false' %}
+                      {% include 'chip_settings_style.jinja' %}
               - type: spacer
               - type: template
                 content: BASS+
@@ -1665,23 +1628,18 @@ cards:
                   action: none
                 entity: ""
                 card_mod:
-                  style: |
-                    ha-card:hover {
-                      --chip-background: rgba(var(--rgb-primary-text-color), 0.1);
-                      }
-            alignment: center
+                  style:
+                    .: |
+                      {% set hover = 'true' %}
+                      {% set stating = 'false' %}
+                      {% include 'chip_settings_style.jinja' %}
+            alignment: justify
             card_mod:
               style: |
-                ha-card {
-                     margin: 20px 18px 10px 18px;
-                      --chip-background: rgba(var(--rgb-disabled), 0);
-                      --chip-border-width: 0;
-                      --chip-box-shadow: none;
-                      --chip-border-radius: 15px;
-                      --chip-height: 45px;
-                      --chip-padding: 15px;
-                      --chip-spacing: 20px;
-                }
+                {% set left = 20 %}
+                {% set top = 0 %}
+                {% set right = 20 %}
+                {% include 'pop_up_buttons.jinja' %}
         card_mod:
           style:
             .: |
@@ -1730,6 +1688,12 @@ cards:
             icon: ""
           - type: spacer
           - type: back
+            card_mod:
+              style:
+                .: |
+                  {% set hover = 'true' %}
+                  {% set stating = 'false' %}
+                  {% include 'chip_settings_style.jinja' %}
         layout_options:
           grid_columns: full
         card_mod:
@@ -1739,19 +1703,7 @@ cards:
                 --card-mod-icon: mdi:close;
               }
             .: |
-              ha-card {
-                margin: 12px 0px 0px;
-                --chip-background: none;
-                --chip-border-width: 0;
-                --chip-box-shadow: none;
-                --chip-border-radius: 12px;
-                --chip-height: 40px;
-                --chip-padding: 14px;
-                --chip-spacing: -35px;
-                --chip-icon-size: 0.7em;
-                --chip-font-size: 0.6em;
-              }
-              }
+              {% include 'pop_up_title.jinja' %}
       - type: custom:stack-in-card
         cards:
           - type: custom:mushroom-chips-card
@@ -1775,10 +1727,11 @@ cards:
                   action: none
                 entity: ""
                 card_mod:
-                  style: |
-                    ha-card:hover {
-                      --chip-background: rgba(var(--rgb-primary-text-color), 0.1);
-                      }
+                  style:
+                    .: |
+                      {% set hover = 'true' %}
+                      {% set stating = 'false' %}
+                      {% include 'chip_settings_style.jinja' %}
               - type: template
                 tap_action:
                   action: perform-action
@@ -1797,10 +1750,11 @@ cards:
                   action: none
                 icon: mdi:numeric
                 card_mod:
-                  style: |
-                    ha-card:hover {
-                      --chip-background: rgba(var(--rgb-primary-text-color), 0.1);
-                      }
+                  style:
+                    .: |
+                      {% set hover = 'true' %}
+                      {% set stating = 'false' %}
+                      {% include 'chip_settings_style.jinja' %}
               - type: template
                 tap_action:
                   action: perform-action
@@ -1819,23 +1773,19 @@ cards:
                   action: none
                 icon: mdi:gamepad-circle
                 card_mod:
-                  style: |
-                    ha-card:hover {
-                      --chip-background: rgba(var(--rgb-primary-text-color), 0.1);
-                      }
+                  style:
+                    .: |
+                      {% set hover = 'true' %}
+                      {% set stating = 'false' %}
+                      {% include 'chip_settings_style.jinja' %}
             alignment: justify
             card_mod:
               style: |
-                ha-card {
-                     margin: 20px 18px 0px 18px;
-                      --chip-background: rgba(var(--rgb-disabled), 0);
-                      --chip-border-width: 0;
-                      --chip-box-shadow: none;
-                      --chip-border-radius: 15px;
-                      --chip-height: 45px;
-                      --chip-padding: 15px;
-                      --chip-spacing: 20px;
-                }
+                {% set left = 20 %}
+                {% set top = 20 %}
+                {% set right = 20 %}
+                {% set bottom = 20 %}
+                {% include 'pop_up_buttons.jinja' %}
           - type: custom:mushroom-chips-card
             chips:
               - type: template
@@ -1856,10 +1806,11 @@ cards:
                   action: none
                 icon: mdi:volume-mute
                 card_mod:
-                  style: |
-                    ha-card:hover {
-                      --chip-background: rgba(var(--rgb-primary-text-color), 0.1);
-                      }
+                  style:
+                    .: |
+                      {% set hover = 'true' %}
+                      {% set stating = 'false' %}
+                      {% include 'chip_settings_style.jinja' %}
               - type: template
                 icon: mdi:circle-small
                 tap_action:
@@ -1878,10 +1829,11 @@ cards:
                 double_tap_action:
                   action: none
                 card_mod:
-                  style: |
-                    ha-card:hover {
-                      --chip-background: rgba(var(--rgb-primary-text-color), 0.1);
-                      }
+                  style:
+                    .: |
+                      {% set hover = 'true' %}
+                      {% set stating = 'false' %}
+                      {% include 'chip_settings_style.jinja' %}
               - type: template
                 tap_action:
                   action: perform-action
@@ -1900,23 +1852,18 @@ cards:
                   action: none
                 icon: mdi:play-pause
                 card_mod:
-                  style: |
-                    ha-card:hover {
-                      --chip-background: rgba(var(--rgb-primary-text-color), 0.1);
-                      }
+                  style:
+                    .: |
+                      {% set hover = 'true' %}
+                      {% set stating = 'false' %}
+                      {% include 'chip_settings_style.jinja' %}
             alignment: justify
             card_mod:
               style: |
-                ha-card {
-                     margin: 20px 18px 0px 18px;
-                      --chip-background: rgba(var(--rgb-disabled), 0);
-                      --chip-border-width: 0;
-                      --chip-box-shadow: none;
-                      --chip-border-radius: 15px;
-                      --chip-height: 45px;
-                      --chip-padding: 15px;
-                      --chip-spacing: 20px;
-                }
+                {% set left = 20 %}
+                {% set right = 20 %}
+                {% set bottom = 5 %}
+                {% include 'pop_up_buttons.jinja' %}
           - type: custom:mushroom-chips-card
             chips:
               - type: template
@@ -1937,10 +1884,11 @@ cards:
                   action: none
                 icon: mdi:volume-medium
                 card_mod:
-                  style: |
-                    ha-card:hover {
-                      --chip-background: rgba(var(--rgb-primary-text-color), 0.1);
-                      }
+                  style:
+                    .: |
+                      {% set hover = 'true' %}
+                      {% set stating = 'false' %}
+                      {% include 'chip_settings_style.jinja' %}
               - type: spacer
               - type: template
                 icon: mdi:circle-small
@@ -1960,10 +1908,11 @@ cards:
                 double_tap_action:
                   action: none
                 card_mod:
-                  style: |
-                    ha-card:hover {
-                      --chip-background: rgba(var(--rgb-primary-text-color), 0.1);
-                      }
+                  style:
+                    .: |
+                      {% set hover = 'true' %}
+                      {% set stating = 'false' %}
+                      {% include 'chip_settings_style.jinja' %}
               - type: template
                 tap_action:
                   action: perform-action
@@ -1983,10 +1932,11 @@ cards:
                 icon: mdi:circle-medium
                 icon_color: "1"
                 card_mod:
-                  style: |
-                    ha-card:hover {
-                      --chip-background: rgba(var(--rgb-primary-text-color), 0.1);
-                      }
+                  style:
+                    .: |
+                      {% set hover = 'true' %}
+                      {% set stating = 'false' %}
+                      {% include 'chip_settings_style.jinja' %}
               - type: template
                 icon: mdi:circle-small
                 tap_action:
@@ -2005,10 +1955,11 @@ cards:
                 double_tap_action:
                   action: none
                 card_mod:
-                  style: |
-                    ha-card:hover {
-                      --chip-background: rgba(var(--rgb-primary-text-color), 0.1);
-                      }
+                  style:
+                    .: |
+                      {% set hover = 'true' %}
+                      {% set stating = 'false' %}
+                      {% include 'chip_settings_style.jinja' %}
               - type: spacer
               - type: template
                 tap_action:
@@ -2028,23 +1979,18 @@ cards:
                   action: none
                 icon: mdi:volume-high
                 card_mod:
-                  style: |
-                    ha-card:hover {
-                      --chip-background: rgba(var(--rgb-primary-text-color), 0.1);
-                      }
+                  style:
+                    .: |
+                      {% set hover = 'true' %}
+                      {% set stating = 'false' %}
+                      {% include 'chip_settings_style.jinja' %}
             alignment: center
             card_mod:
               style: |
-                ha-card {
-                     margin: 18px 18px 20px 18px;
-                      --chip-background: rgba(var(--rgb-disabled), 0);
-                      --chip-border-width: 0;
-                      --chip-box-shadow: none;
-                      --chip-border-radius: 15px;
-                      --chip-height: 45px;
-                      --chip-padding: 15px;
-                      --chip-spacing: 20px;
-                }
+                {% set left = 20 %}
+                {% set right = 20 %}
+                {% set bottom = 5 %}
+                {% include 'pop_up_buttons.jinja' %}
           - type: custom:mushroom-chips-card
             chips:
               - type: template
@@ -2065,10 +2011,11 @@ cards:
                 double_tap_action:
                   action: none
                 card_mod:
-                  style: |
-                    ha-card:hover {
-                      --chip-background: rgba(var(--rgb-primary-text-color), 0.1);
-                      }
+                  style:
+                    .: |
+                      {% set hover = 'true' %}
+                      {% set stating = 'false' %}
+                      {% include 'chip_settings_style.jinja' %}
               - type: template
                 icon: mdi:circle-small
                 tap_action:
@@ -2087,10 +2034,11 @@ cards:
                 double_tap_action:
                   action: none
                 card_mod:
-                  style: |
-                    ha-card:hover {
-                      --chip-background: rgba(var(--rgb-primary-text-color), 0.1);
-                      }
+                  style:
+                    .: |
+                      {% set hover = 'true' %}
+                      {% set stating = 'false' %}
+                      {% include 'chip_settings_style.jinja' %}
               - type: template
                 icon: mdi:home
                 tap_action:
@@ -2109,23 +2057,19 @@ cards:
                 double_tap_action:
                   action: none
                 card_mod:
-                  style: |
-                    ha-card:hover {
-                      --chip-background: rgba(var(--rgb-primary-text-color), 0.1);
-                      }
+                  style:
+                    .: |
+                      {% set hover = 'true' %}
+                      {% set stating = 'false' %}
+                      {% include 'chip_settings_style.jinja' %}
             alignment: justify
             card_mod:
               style: |
-                ha-card {
-                     margin: 0px 18px 10px 18px;
-                      --chip-background: rgba(var(--rgb-disabled), 0);
-                      --chip-border-width: 0;
-                      --chip-box-shadow: none;
-                      --chip-border-radius: 15px;
-                      --chip-height: 45px;
-                      --chip-padding: 15px;
-                      --chip-spacing: 20px;
-                }
+                {% set left = 20 %}
+                {% set top = 0 %}
+                {% set right = 20 %}
+
+                {% include 'pop_up_buttons.jinja' %}
         card_mod:
           style:
             .: |

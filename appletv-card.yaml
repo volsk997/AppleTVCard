@@ -2087,5 +2087,4 @@ cards:
               ha-card {
                 background: transparent !important;
                 border-width: 0px;
-
                   }

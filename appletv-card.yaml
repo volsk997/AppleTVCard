@@ -754,28 +754,22 @@ cards:
                     {% set stating = 'true' %}
                     {% set state_on = 'VLC' %}
                     {% include 'chip_settings_style.jinja' %}
-          - type: conditional
-            conditions:
-              - condition: state
-                entity: media_player.gostinaia
-                state_not: standby
-            chip:
-              type: template
-              tap_action:
-                action: none
-              icon: ph:line-vertical
-              icon_color: 150,150,150,0.5
-              hold_action:
-                action: none
-              double_tap_action:
-                action: none
-              card_mod:
-                style:
-                  .: |
-                    ha-card{
-                      margin-left: -20px;
-                      margin-right: -20px;
-                    }
+          - type: template
+            tap_action:
+              action: none
+            icon: ph:line-vertical
+            icon_color: 150,150,150,0.5
+            hold_action:
+              action: none
+            double_tap_action:
+              action: none
+            card_mod:
+              style:
+                .: |
+                  ha-card{
+                    margin-left: -20px;
+                    margin-right: -20px;
+                  }
           - type: template
             tap_action:
               action: navigate
@@ -2087,4 +2081,5 @@ cards:
               ha-card {
                 background: transparent !important;
                 border-width: 0px;
+
                   }

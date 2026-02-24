@@ -740,7 +740,7 @@ cards:
                   source: YouTube
               icon: mdi:youtube
               icon_color: |-
-                {% if is_state(config.entity, 'VLC')%} orange
+                {% if is_state(config.entity, 'YouTube')%} red
                 {% else %} '1'
                 {% endif %}
               hold_action:
@@ -752,7 +752,7 @@ cards:
                   .: |
                     {% set hover = 'true' %}
                     {% set stating = 'true' %}
-                    {% set state_on = 'VLC' %}
+                    {% set state_on = 'YouTube' %}
                     {% include 'chip_settings_style.jinja' %}
           - type: template
             tap_action:
@@ -2081,5 +2081,4 @@ cards:
               ha-card {
                 background: transparent !important;
                 border-width: 0px;
-
                   }

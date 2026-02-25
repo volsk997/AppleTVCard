@@ -786,38 +786,6 @@ cards:
                   {% set hover = 'true' %}
                   {% set stating = 'false' %}
                   {% include 'chip_settings_style.jinja' %}
-          - type: template
-            tap_action:
-              action: navigate
-              navigation_path: "#samsung"
-            icon: mdi:soundbar
-            icon_color: "1"
-            hold_action:
-              action: none
-            double_tap_action:
-              action: none
-            card_mod:
-              style:
-                .: |
-                  {% set hover = 'true' %}
-                  {% set stating = 'false' %}
-                  {% include 'chip_settings_style.jinja' %}
-          - type: template
-            tap_action:
-              action: navigate
-              navigation_path: "#samsungtv"
-            icon: mdi:remote
-            icon_color: "1"
-            hold_action:
-              action: none
-            double_tap_action:
-              action: none
-            card_mod:
-              style:
-                .: |
-                  {% set hover = 'true' %}
-                  {% set stating = 'false' %}
-                  {% include 'chip_settings_style.jinja' %}
         alignment: center
         card_mod:
           style:
@@ -854,8 +822,8 @@ cards:
         hash: "#appletv"
         name: AppleTV
         icon: bha:apple-tv
-        margin_top_mobile: calc(100vh - 450px)
-        margin_top_desktop: calc(100vh - 400px)
+        margin_top_mobile: calc(100vh - 510px)
+        margin_top_desktop: calc(100vh - 460px)
         tap_action:
           action: none
         double_tap_action:
@@ -1185,6 +1153,48 @@ cards:
                 {% set top = 0 %}
                 {% set right = 20 %}
 
+                {% include 'pop_up_buttons.jinja' %}
+          - type: custom:mushroom-chips-card
+            chips:
+              - type: template
+                tap_action:
+                  action: navigate
+                  navigation_path: "#samsung"
+                icon: mdi:soundbar
+                icon_color: "1"
+                hold_action:
+                  action: none
+                double_tap_action:
+                  action: none
+                card_mod:
+                  style:
+                    .: |
+                      {% set hover = 'true' %}
+                      {% set stating = 'false' %}
+                      {% include 'chip_settings_style.jinja' %}
+              - type: spacer
+              - type: template
+                tap_action:
+                  action: navigate
+                  navigation_path: "#samsungtv"
+                icon: mdi:remote
+                icon_color: "1"
+                hold_action:
+                  action: none
+                double_tap_action:
+                  action: none
+                card_mod:
+                  style:
+                    .: |
+                      {% set hover = 'true' %}
+                      {% set stating = 'false' %}
+                      {% include 'chip_settings_style.jinja' %}
+            alignment: center
+            card_mod:
+              style: |
+                {% set left = 20 %}
+                {% set right = 20 %}
+                {% set bottom = 5 %}
                 {% include 'pop_up_buttons.jinja' %}
         card_mod:
           style:

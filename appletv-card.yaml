@@ -1,8 +1,6 @@
 type: custom:bubble-card
 card_type: pop-up
 hash: '#apple_tv'
-margin_top_mobile: auto
-margin_top_desktop: auto
 tap_action:
   action: none
 double_tap_action:
@@ -10,7 +8,7 @@ double_tap_action:
 hold_action:
   action: none
 show_header: false
-close_by_clicking_outside: false
+close_by_clicking_outside: true
 button_type: name
 styles: |
   #root {
@@ -54,12 +52,27 @@ cards:
       - type: template
         entity: sensor.vremia_raboty_tv
         content: |
-          {% if states(entity)|float(0) > 0.001 %}
-            {% set total_hours = states(entity) | float(0) %}
-            {% set hours = total_hours | int %}
-            {% set minutes = ((total_hours - hours) * 60) | int %}
-            {{ hours }}:{{ '%02d' | format(minutes) }}
-          {% else %} {% endif %}
+          {% set total_raw_minutes = (states(entity) | float(0)) * 60 %}
+          {% set whole_minutes = total_raw_minutes | int %}
+          {% set fraction = total_raw_minutes - whole_minutes %}
+
+          {% if fraction >= 0.9 %}
+            {% set total_minutes = whole_minutes + 1 %}
+          {% else %}
+            {% set total_minutes = whole_minutes %}
+          {% endif %}
+
+          {% set days = total_minutes // 1440 %}
+          {% set hours = (total_minutes % 1440) // 60 %}
+          {% set minutes = total_minutes % 60 %}
+
+          {% if total_minutes == 0 %}
+            0 мин
+          {% else %}
+            {% if days > 0 %}{{ days }} д {% endif %}
+            {% if hours > 0 %}{{ hours }} ч {% endif %}
+            {% if minutes > 0 %}{{ minutes }} мин{% endif %}
+          {% endif %}
         double_tap_action:
           action: none
         tap_action:
@@ -108,35 +121,31 @@ cards:
     grid_options:
       columns: 12
       rows: auto
-  - type: custom:mushroom-chips-card
-    chips:
-      - type: template
-        entity: media_player.gostinaia
-        picture: |
-          {{state_attr(entity, 'entity_picture')}}
-        tap_action:
-          action: toggle
-        hold_action:
-          action: none
-        double_tap_action:
-          action: none
-        icon: phu:apple-tv
-        icon_color: '1'
-        card_mod:
-          style:
-            .: |
-              {% set scale = '1' %}
-              {% set hover = '' %}
-              {% set stating = 'true' %}
-              {% set state_on = '' %}
-              {% set color = 'rgba(120,120,120,0.2)' %}
-              {% set hover_color_off = 'rgba(120,120,120,0.3) !important' %}
-              {% include 'chip_settings_style.jinja' %}
-    alignment: center
+  - type: custom:mini-media-player
+    entity: media_player.gostinaia
+    background: /local/cards_img/atv.png
+    artwork: full-cover
+    hide:
+      name: true
+      info: true
+      controls: true
+      source: true
+      power: true
+      volume: true
+      progress: true
+      icon: true
+    toggle_power: false
+    tap_action:
+      action: none
     card_mod:
-      style:
-        .: |
-          {% include 'big_button_popup.jinja' %}
+      style: |
+        ha-card {
+          aspect-ratio: 1 / 1;
+          {% if is_state(config.entity, 'playing') %}
+          {% else %}
+          opacity: 0.4;
+          {% endif %}
+        }
   - type: custom:mushroom-template-card
     features_position: bottom
     entity: media_player.gostinaia
@@ -145,7 +154,6 @@ cards:
       rows: auto
     tap_action:
       action: none
-    vertical: true
     icon_tap_action:
       action: none
     primary: |-
@@ -233,7 +241,7 @@ cards:
           columns: 12
           rows: auto
         color: |-
-          {% if is_state(config.entity, 'on')%} white
+          {% if is_state(config.entity, 'on')%}  white
           {% else %} disabled
           {% endif %}
         icon_tap_action:
@@ -395,6 +403,6 @@ cards:
             border-width: 0px;
             margin: 0px 0px 0px;
           }
-popup_mode: default
+popup_mode: fit-content
 card_layout: large
 slide_to_close_distance: '500'

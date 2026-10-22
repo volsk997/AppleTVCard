@@ -49,45 +49,51 @@ cards:
            {% else %}
              red
            {% endif %}
-      - type: template
-        entity: sensor.vremia_raboty_tv
-        content: |
-          {% set total_raw_minutes = (states(entity) | float(0)) * 60 %}
-          {% set whole_minutes = total_raw_minutes | int %}
-          {% set fraction = total_raw_minutes - whole_minutes %}
+      - type: conditional
+        conditions:
+          - condition: numeric_state
+            entity_id: sensor.vremia_raboty_tv
+            above: 0.016
+        chip:
+          type: template
+          entity: sensor.vremia_raboty_tv
+          content: |
+            {% set total_raw_minutes = (states(entity) | float(0)) * 60 %}
+            {% set whole_minutes = total_raw_minutes | int %}
+            {% set fraction = total_raw_minutes - whole_minutes %}
 
-          {% if fraction >= 0.9 %}
-            {% set total_minutes = whole_minutes + 1 %}
-          {% else %}
-            {% set total_minutes = whole_minutes %}
-          {% endif %}
+            {% if fraction >= 0.9 %}
+              {% set total_minutes = whole_minutes + 1 %}
+            {% else %}
+              {% set total_minutes = whole_minutes %}
+            {% endif %}
 
-          {% set days = total_minutes // 1440 %}
-          {% set hours = (total_minutes % 1440) // 60 %}
-          {% set minutes = total_minutes % 60 %}
+            {% set days = total_minutes // 1440 %}
+            {% set hours = (total_minutes % 1440) // 60 %}
+            {% set minutes = total_minutes % 60 %}
 
-          {% if total_minutes == 0 %}
-            0 мин
-          {% else %}
-            {% if days > 0 %}{{ days }} д {% endif %}
-            {% if hours > 0 %}{{ hours }} ч {% endif %}
-            {% if minutes > 0 %}{{ minutes }} мин{% endif %}
-          {% endif %}
-        double_tap_action:
-          action: none
-        tap_action:
-          action: more-info
-        hold_action:
-          action: none
-        icon: |
-          {% if states(entity)|int > 0 %}mdi:clock-check
-          {% else %}mdi:clock-check-outline{% endif %}
-        card_mod:
-          style:
-            .: |
-              {% set hover = 'true' %}
-              {% set stating = 'false' %}
-              {% include 'chip_settings_style.jinja' %}
+            {% if total_minutes == 0 %}
+              0 мин
+            {% else %}
+              {% if days > 0 %}{{ days }} д {% endif %}
+              {% if hours > 0 %}{{ hours }} ч {% endif %}
+              {% if minutes > 0 %}{{ minutes }} мин{% endif %}
+            {% endif %}
+          double_tap_action:
+            action: none
+          tap_action:
+            action: more-info
+          hold_action:
+            action: none
+          icon: |
+            {% if states(entity)|int > 0 %}mdi:clock-check
+            {% else %}mdi:clock-check-outline{% endif %}
+          card_mod:
+            style:
+              .: |
+                {% set hover = 'true' %}
+                {% set stating = 'false' %}
+                {% include 'chip_settings_style.jinja' %}
       - type: template
         entity: media_player.gostinaia
         double_tap_action:
@@ -275,7 +281,7 @@ cards:
         icon_tap_action:
           action: none
         color: |-
-          {% if is_state('binary_sensor.appletv_media_progress','on')%} 1
+          {% if is_state('binary_sensor.appletv_media_progress','on')%} white
           {% else %} disabled
           {% endif %}
         card_mod:
@@ -302,7 +308,7 @@ cards:
           {% elif is_state(entity, 'paused')%} fas:play
           {% else %}fas:play{% endif%}
         color: |-
-          {% if is_state('binary_sensor.appletv_media_progress','on')%} 1
+          {% if is_state('binary_sensor.appletv_media_progress','on')%} white
           {% else %} disabled
           {% endif %}
         card_mod:
@@ -327,7 +333,7 @@ cards:
         icon_tap_action:
           action: none
         color: |-
-          {% if is_state('binary_sensor.appletv_media_progress','on')%} 1
+          {% if is_state('binary_sensor.appletv_media_progress','on')%} white
           {% else %} disabled
           {% endif %}
         card_mod:
@@ -369,18 +375,6 @@ cards:
     primary_info: none
     secondary_info: none
     icon_type: none
-    visibility:
-      - condition: state
-        entity: media_player.gostinaia
-        state_not: unavailable
-      - condition: state
-        entity: media_player.gostinaia
-        state_not: standby
-      - condition: state
-        entity: media_player.gostinaia
-        state_not: 'off'
-      - condition: state
-        state_not: unavailable
     card_mod:
       style:
         mushroom-media-player-volume-control$: |
@@ -397,6 +391,38 @@ cards:
             border-width: 0px;
             
           }
+  - type: custom:mushroom-template-card
+    features_position: bottom
+    entity: input_boolean.appletv_muzyka
+    grid_options:
+      columns: 12
+      rows: auto
+    icon_tap_action:
+      action: none
+    icon: mdi:heart
+    vertical: true
+    tap_action:
+      action: toggle
+    color: white
+    visibility:
+      - condition: state
+        entity: media_player.gostinaia
+        state_not: unavailable
+      - condition: state
+        entity: media_player.gostinaia
+        state_not: standby
+      - condition: state
+        entity: media_player.gostinaia
+        state_not: 'off'
+      - condition: state
+        state_not: unavailable
+    badge_color: pink
+    card_mod:
+      style: |
+        ha-card {
+          zoom: 1.5;
+          background: none !important;
+        }
 popup_mode: fit-content
 card_layout: large
 slide_to_close_distance: '500'
